@@ -27,7 +27,7 @@ class S4ServiceSpec extends Specification with Specs2RouteTest with S4Service wi
       "Return an empty list if there are no entities" ! getEmptyPersonList ^
       "Create a new entity" ! createPerson ^
       "Return a non-empty list if there some entities" ! getNonEmptyPersonList ^
-      "Read existing" ! todo ^
+      "Read existing" ! getKnownPerson ^
       "Update existing" ! todo ^
       "Delete existing" ! todo ^
       "Handle missing fields" ! todo ^
@@ -69,4 +69,13 @@ class S4ServiceSpec extends Specification with Specs2RouteTest with S4Service wi
       ok
     }
   }
+  
+    def getKnownPerson = {
+    Get("/persons") ~> s4Route ~> check {
+      entityAs[List[Person]].init === expectedPerson
+      ok
+    }
+  }
+
+
 }
